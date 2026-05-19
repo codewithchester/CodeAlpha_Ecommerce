@@ -6,36 +6,51 @@
     <link rel="stylesheet" href="{% static 'store/css/style.css' %}" />
   </head>
   <body>
-    <div class="header">
-      <h1>🛒 My Awesome Store</h1>
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="{% url 'product_list' %}" class="logo"> 🛍️ MyStore </a>
+        <div class="nav-links">
+          <a href="{% url 'product_list' %}">Home</a>
+          <a href="{% url 'cart_summary' %}" class="cart-icon">🛒 Cart</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- PRODUCT DETAIL -->
+    <div class="detail-container">
+      <div class="product-detail">
+        <div>
+          {% if product.image %}
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+          {% else %}
+          <img
+            src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&h=500&fit=crop"
+            alt="Product"
+          />
+          {% endif %}
+        </div>
+
+        <div class="detail-info">
+          <h1>{{ product.name }}</h1>
+          <p class="detail-price">${{ product.price }}</p>
+          <p class="detail-description">{{ product.description }}</p>
+
+          <div class="detail-actions">
+            <a href="{% url 'cart_add' product.id %}" class="btn btn-primary"
+              >🛒 Add to Cart</a
+            >
+            <a href="{% url 'product_list' %}" class="btn btn-secondary"
+              >← Back to Shop</a
+            >
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="product-detail">
-      <div>
-        {% if product.image %}
-        <img src="{{ product.image.url }}" alt="{{ product.name }}" />
-        {% else %}
-        <img
-          src="https://via.placeholder.com/350x350?text=No+Image"
-          alt="No image"
-        />
-        {% endif %}
-      </div>
-
-      <div class="detail-info">
-        <h1>{{ product.name }}</h1>
-        <p class="price">${{ product.price }}</p>
-        <p class="description">{{ product.description }}</p>
-        <a
-          href="{% url 'cart_add' product.id %}"
-          class="btn btn-primary"
-          style="margin-bottom: 10px"
-          >🛒 Add to Cart</a
-        >
-        <a href="{% url 'product_list' %}" class="btn btn-back"
-          >← Back to Shop</a
-        >
-      </div>
-    </div>
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>&copy; 2024 MyStore. All rights reserved. Made with ❤️</p>
+    </footer>
   </body>
 </html>
