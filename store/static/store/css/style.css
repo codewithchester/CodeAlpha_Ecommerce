@@ -170,7 +170,8 @@ body {
 .product-card img {
     width: 100%;
     height: 250px;
-    object-fit: cover;
+    object-fit: contain;
+    background: #f8f9fa;
     transition: transform 0.5s;
 }
 
@@ -306,8 +307,9 @@ body {
 
 .product-detail img {
     width: 100%;
-    height: 450px;
-    object-fit: cover;
+    max-height: 500px;
+    object-fit: contain;
+    background: #f8f9fa;
     border-radius: 15px;
 }
 
