@@ -1,0 +1,35 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <title>{{ product.name }} - My Store</title>
+    <link rel="stylesheet" href="{% static 'store/css/style.css' %}" />
+  </head>
+  <body>
+    <div class="header">
+      <h1>🛒 My Awesome Store</h1>
+    </div>
+
+    <div class="product-detail">
+      <div>
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+        {% else %}
+        <img
+          src="https://via.placeholder.com/350x350?text=No+Image"
+          alt="No image"
+        />
+        {% endif %}
+      </div>
+
+      <div class="detail-info">
+        <h1>{{ product.name }}</h1>
+        <p class="price">${{ product.price }}</p>
+        <p class="description">{{ product.description }}</p>
+        <a href="{% url 'product_list' %}" class="btn btn-back"
+          >← Back to Shop</a
+        >
+      </div>
+    </div>
+  </body>
+</html>
