@@ -1,0 +1,149 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <title>Shopping Cart - My Store</title>
+    <link rel="stylesheet" href="{% static 'store/css/style.css' %}" />
+    <style>
+      .cart-container {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 0 20px;
+      }
+
+      .cart-item {
+        display: flex;
+        align-items: center;
+        background: white;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .cart-item-info {
+        flex: 1;
+        margin-left: 20px;
+      }
+
+      .cart-item-info h3 {
+        margin: 0 0 5px 0;
+      }
+
+      .cart-item-price {
+        color: #27ae60;
+        font-weight: bold;
+      }
+
+      .cart-total {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: right;
+        margin-top: 20px;
+      }
+
+      .cart-total h2 {
+        margin: 0;
+        color: #2c3e50;
+      }
+
+      .cart-empty {
+        text-align: center;
+        padding: 60px;
+        color: #95a5a6;
+        font-size: 1.2em;
+      }
+
+      .btn-remove {
+        background-color: #e74c3c;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 0.9em;
+      }
+
+      .btn-remove:hover {
+        background-color: #c0392b;
+      }
+
+      .btn-continue {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 20px;
+      }
+
+      .messages {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 0 20px;
+      }
+
+      .message-success {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 12px 20px;
+        border-radius: 5px;
+        border: 1px solid #c3e6cb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>🛒 Shopping Cart</h1>
+    </div>
+
+    <!-- Messages (like "Added to cart!") -->
+    {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+      <div class="message-success">{{ message }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="cart-container">
+      {% if cart_items %} {% for item in cart_items %}
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <h3>{{ item.product.name }}</h3>
+          <p class="cart-item-price">${{ item.product.price }} each</p>
+          <p>Quantity: {{ item.quantity }}</p>
+          <p><strong>Item Total: ${{ item.item_total }}</strong></p>
+        </div>
+        <div>
+          <a href="{% url 'cart_remove' item.product.id %}" class="btn-remove"
+            >Remove</a
+          >
+        </div>
+      </div>
+      {% endfor %}
+
+      <div class="cart-total">
+        <h2>Total: ${{ total_price }}</h2>
+      </div>
+
+      <a href="{% url 'product_list' %}" class="btn-continue"
+        >← Continue Shopping</a
+      >
+
+      {% else %}
+      <div class="cart-empty">
+        <p>🛒 Your cart is empty</p>
+        <a
+          href="{% url 'product_list' %}"
+          class="btn btn-primary"
+          style="margin-top: 20px"
+          >Start Shopping</a
+        >
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
